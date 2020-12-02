@@ -1,0 +1,14 @@
+module top_module(
+    input clk, rst, debug;
+    input [9:0] switch;
+    input [3:0] buttons;
+    output [9:0] leds;
+    output [6:0] disp0;
+    output [6:0] disp1;
+    output [6:0] disp2;
+    output [6:0] disp3;
+    output [6:0] disp4;
+    output [6:0] disp5;
+
+    MIPS DUT(.*);
+);
