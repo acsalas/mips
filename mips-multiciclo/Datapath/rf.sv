@@ -11,6 +11,10 @@ module rf(
   
   reg [31:0] mem[31:0];
   int i;
+
+  initial begin
+    mem[16]= 32'h18; //set up to point $S0 to position 24 of data memory.
+  end
   
   always @ (posedge clk)
   begin
