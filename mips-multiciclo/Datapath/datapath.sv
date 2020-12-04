@@ -71,7 +71,7 @@ wire [4:0] write_register;
     assign write_register = RegDst ? instruction[15:11] : rt_addr;
     
     rf RF(.clk(clk), .rst(rst), .we(RegWrite), .rs_addr(rs_addr), .rt_addr(rt_addr), 
-    .rd_addr(write_register), .rd_data(write_data), .rs_data(rf_A), .rt_data(rf_B), .sw_addr(sw_addr[4:0]), .testReg());
+    .rd_addr(write_register), .rd_data(write_data), .rs_data(rf_A), .rt_data(rf_B), .sw_address(sw_addr[4:0]), .testReg(regFileReg));
 
 
     /************** ALU **************************/
