@@ -15,8 +15,8 @@ bcd2seven D0(.bcd(data[3:0]),.segs(disp0));
 bcd2seven D1(.bcd(data[7:4]),.segs(disp1));
 bcd2seven D2(.bcd(data[11:8]),.segs(disp2));
 bcd2seven D3(.bcd(data[15:12]),.segs(disp3));
-bcd2seven D4(.bcd(data[21:18]),.segs(disp4));
-bcd2seven D5(.bcd(data[25:22]),.segs(disp5));
+bcd2seven D4(.bcd(data[19:16]),.segs(disp4));
+bcd2seven D5(.bcd(data[23:20]),.segs(disp5));
 
 MIPS DUT(.clk(buttons[0]),.rst(~buttons[1]), .debug(switches[9]),
         .sw_addr(switches[9:0]), .debug_inst(switches[8:0]), .state(leds), .pc(), .data(data));
