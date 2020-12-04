@@ -13,7 +13,7 @@ module rf(
   int i;
 
   initial begin
-    mem[16]= 32'h18; //set up to point $S0 to position 24 of data memory.
+    mem[16]= 32'h17; //set up to point $S0 to position 23 of data memory.
   end
   
   always @ (posedge clk)
