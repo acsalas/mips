@@ -4,9 +4,11 @@ module rf(
   input [4:0] rs_addr,
   input [4:0] rt_addr,
   input [4:0] rd_addr,
+  input [4:0] sw_address,
   input [31:0] rd_data,
   output reg [31:0] rs_data,
-  output reg [31:0] rt_data
+  output reg [31:0] rt_data, 
+  output  [31:0] testReg
   );
   
   reg [31:0] mem[31:0];
@@ -33,5 +35,6 @@ module rf(
         rs_data <= mem[rs_addr];
         rt_data <= mem[rt_addr];  
     end
-  
+  assign testReg = mem[sw_address];
+
 endmodule

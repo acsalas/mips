@@ -24,9 +24,9 @@ wire [4:0] write_register;
 
     assign pc = curr_pc;
     /******** MEMORY *************/
-    wire [4:0] rs_addr, rt_addr, rs_addr_ir;
+    wire [4:0] rs_addr, rt_addr;
     wire [15:0] instruction;
-    wire [31:0] mem_data, data, mem_addr, out_data_ram;
+    wire [31:0] mem_data, data, mem_addr, out_data_ram, regFileReg;
     
     //Signals for debugging with testbench
     wire [31:0] full_inst;
@@ -47,8 +47,8 @@ wire [4:0] write_register;
 
     assign full_inst = debug ? manual_inst : mem_data;
 
-    assign rs_addr = test_button[0]?rs_addr_ir:sw_addr[4:0]; // if button[2] pressed, read data from register file
-    assign out_data = test_button[0]?out_data_ram:rf_A;      // at address given by switches
+    //assign rs_addr = test_button[0]?rs_addr_ir:sw_addr[4:0]; // if button[2] pressed, read data from register file
+    assign out_data = test_button[0]?out_data_ram:regFileReg;      // at address given by switches
 
 
     assign func = instruction[5:0];
@@ -60,7 +60,7 @@ wire [4:0] write_register;
     memory RAM(.clk(clk), .we(MemWrite), .re(MemRead),.Address(mem_addr), .w_data(rf_B),  .mem_data(mem_data), .sw_addr(sw_addr), .out_data(out_data_ram));
 
     instruction_reg IR(.clk(clk), .dataIn(full_inst), .IRWrite(IRWrite),
-        .opcode(opcode), .rs_addr(rs_addr_ir), .rt_addr(rt_addr), .instruction(instruction));
+        .opcode(opcode), .rs_addr(rs_addr), .rt_addr(rt_addr), .instruction(instruction));
     data_reg DR(.clk(clk), .dataIn(full_inst), .dataOut(data));
 
     /************* REGISTER FILE ***************/
@@ -71,7 +71,7 @@ wire [4:0] write_register;
     assign write_register = RegDst ? instruction[15:11] : rt_addr;
     
     rf RF(.clk(clk), .rst(rst), .we(RegWrite), .rs_addr(rs_addr), .rt_addr(rt_addr), 
-    .rd_addr(write_register), .rd_data(write_data), .rs_data(rf_A), .rt_data(rf_B));
+    .rd_addr(write_register), .rd_data(write_data), .rs_data(rf_A), .rt_data(rf_B), .sw_addr(sw_addr[4:0]), .testReg());
 
 
     /************** ALU **************************/

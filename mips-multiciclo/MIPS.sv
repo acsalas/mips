@@ -2,7 +2,7 @@
 module MIPS (
         input clk, rst, debug,
         input[6:0] sw_addr,
-        input [31:0] debug_inst,,
+        input [31:0] debug_inst,
         input [1:0] test_button,
         output [3:0] state,
         output [31:0] pc, data
