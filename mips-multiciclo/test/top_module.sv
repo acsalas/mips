@@ -19,6 +19,6 @@ bcd2seven D4(.bcd(data[19:16]),.segs(disp4));
 bcd2seven D5(.bcd(data[23:20]),.segs(disp5));
 
 MIPS DUT(.clk(buttons[0]),.rst(~buttons[1]), .debug(switches[9]),
-        .sw_addr(switches[9:0]), .debug_inst(switches[8:0]), .state(leds), .pc(), .data(data));
+        .sw_addr(switches[9:0]), .debug_inst(switches[8:0]), .state(leds), .pc(), .data(data), .test_button(buttons[3:2]));
 
   endmodule 

@@ -6,6 +6,7 @@ module datapath (
         input [2:0] ALUSel,
         input [6:0] sw_addr,
         input [31:0] debug_inst,
+        input [1:0] test_button,
         output [5:0] opcode,func,
 		  output zero,
           output [31:0] pc, out_data
@@ -23,9 +24,9 @@ wire [4:0] write_register;
 
     assign pc = curr_pc;
     /******** MEMORY *************/
-    wire [4:0] rs_addr, rt_addr;
+    wire [4:0] rs_addr, rt_addr, rs_addr_ir;
     wire [15:0] instruction;
-    wire [31:0] mem_data, data, mem_addr;
+    wire [31:0] mem_data, data, mem_addr, out_data_ram;
     
     //Signals for debugging with testbench
     wire [31:0] full_inst;
@@ -45,20 +46,21 @@ wire [4:0] write_register;
     end
 
     assign full_inst = debug ? manual_inst : mem_data;
-    
 
+    assign rs_addr = test_button[0]?rs_addr_ir:sw_addr[4:0]; // if button[2] pressed, read data from register file
+    assign out_data = test_button[0]?out_data_ram:rf_A;      // at address given by switches
 
 
     assign func = instruction[5:0];
 
     assign mem_addr = IorD ? alu_out : curr_pc;
+    
 
 
-
-    memory RAM(.clk(clk), .we(MemWrite), .re(MemRead),.Address(mem_addr), .w_data(rf_B),  .mem_data(mem_data), .sw_addr(sw_addr), .out_data(out_data));
+    memory RAM(.clk(clk), .we(MemWrite), .re(MemRead),.Address(mem_addr), .w_data(rf_B),  .mem_data(mem_data), .sw_addr(sw_addr), .out_data(out_data_ram));
 
     instruction_reg IR(.clk(clk), .dataIn(full_inst), .IRWrite(IRWrite),
-        .opcode(opcode), .rs_addr(rs_addr), .rt_addr(rt_addr), .instruction(instruction));
+        .opcode(opcode), .rs_addr(rs_addr_ir), .rt_addr(rt_addr), .instruction(instruction));
     data_reg DR(.clk(clk), .dataIn(full_inst), .dataOut(data));
 
     /************* REGISTER FILE ***************/
