@@ -28,7 +28,7 @@ module memory(
 		mem_space[78] = 32'hAD6D0000; //sw $13, 0($11)
 		mem_space[79] = 32'hAD6C0001; //sw $12, 1($11)
 		mem_space[80] = 32'h22520001; //ELSE:   addi $18, $18, 1
-		mem_space[81] = 32'h08000042; // j 64
+		mem_space[81] = 32'h08000046; // j 70
 		 
 	end
 
