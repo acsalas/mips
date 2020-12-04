@@ -22,8 +22,11 @@ module rf(
   begin
 
       if(rst)
+      begin
         for(i = 0; i <= 31; i = i+1)
           mem[i] <= 0;
+        mem[16]= 32'h17;
+      end
       else if(we)
         begin
           if(rd_addr != 0)
